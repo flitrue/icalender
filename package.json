@@ -1,0 +1,14 @@
+{
+  "name": "icalender",
+  "version": "1.0.0",
+  "description": "一个可以标记日期范围的vue日历插件",
+  "main": "index.js",
+  "keywords": [
+    "vue",
+    "vue-component",
+    "vue-plugin",
+    "icalender"
+  ],
+  "author": "flitrue",
+  "license": "MIT"
+}
