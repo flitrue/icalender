@@ -42,27 +42,14 @@ export default {
     marks: {
       type: Array,
       default: function () {
-        return [
-          {
-            start: "2019-09-02",
-            end: "2019-09-05"
-          },
-          {
-            start: "2019-09-12",
-            end: "2019-09-12"
-          },
-          {
-            start: "2019-09-15",
-            end: "2019-09-24"
-          }
-        ]
+        return []
       }
     }
   },
   data() {
     return {
       active: "",
-      now: "2019-09-05",
+      now: "",
       year: "",
       month: "",
       month_list: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"],
@@ -228,7 +215,7 @@ svg{
 }
 
 .icalender{
-  width: 300px;
+  width: 260px;
   user-select: none;
 }
 
@@ -237,7 +224,7 @@ svg{
 }
 
 .icalender-body{
- 
+ padding: 10px 5px;
 }
 .icalender-body table{
   width: 100%;
@@ -274,6 +261,7 @@ td:hover{
   height: 100%;
   background-color: #D0494D;
   z-index: 2;
+  transform: scale(.9);
 }
 
 .active-point{
@@ -284,6 +272,7 @@ td:hover{
   height: 100%;
   background-color: rgb(12, 69, 155);
   z-index: 2;
+  transform: scale(.9);
 }
 
 .now-point{
