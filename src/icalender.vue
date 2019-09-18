@@ -22,7 +22,7 @@
       </div>
       <table>
         <tr v-for="(item,index) in list" :key="index">
-          <td v-for="(it,idx) in item" :key="idx" :class="it.active?'active-bg':''" @click="handleClick(it)">
+          <td v-for="(it,idx) in item" :key="idx" :class="{'active-bg': it.active, 'td': it.day}" @click="handleClick(it)">
             <div class="point">
               <div :class="now==it.full_day?'now-point':''"></div>
               <div :class="{'is-point':it.point, 'active-point': active==it.full_day}"></div>
@@ -48,7 +48,7 @@ export default {
   },
   data() {
     return {
-      active: "",
+      active: undefined,
       now: "",
       year: "",
       month: "",
@@ -142,32 +142,40 @@ export default {
           arr = []
         }
         let obj = {
-          year: year,
-          month: month,
-          day: i_list[i]
+          year: year, // 年份
+          month: month, // 月份，范围0～11
+          day: i_list[i], // 日份
+          full_day: "", // 完整日期格式，例如：2019-09-15
+          point: false, //标记一天
+          active: false //标记日期范围
         }
         
         if (i_list[i] != '') {
           let day = i_list[i] > 10 ? i_list[i] : "0" + i_list[i];
           obj.full_day = year + "-" + this.month_list[month] + "-" + day;
         }
-        // 日期标记
+        //  标记日期 start
+        /**
+         * 标记日期分为四种情况：
+         * 1. 开始时间和结束时间都在当前月内
+         * 2. 开始时间在当前月内，结束时间不在当前月内
+         * 3. 开始时间不在当前月内，结束时间在当前月内
+         * 4. 开始时间和结束时间范围包含当前月
+         */
         let marks = this.marks;
         for(let i=0;i<marks.length;i++){
-          let c_date = new Date(marks[i].start.replace(/-/g, "/"))
-          let c_year = c_date.getFullYear();
-          let c_month = c_date.getMonth();
-          // 开始日期和结束日期必须为当前月份
-          if(c_year == year && c_month == month){
-            let start = parseInt(marks[i].start.slice(8));
-            let end = parseInt(marks[i].end.slice(8));
-            if(obj.day == start && start == end){
+          let c_start = new Date(marks[i].start.replace(/-/g, "/"));
+          let c_end = new Date(marks[i].end.replace(/-/g, "/"));
+          if (obj.day) {
+            let now = new Date(obj.full_day.replace(/-/g, "/"));
+            if (obj.full_day === marks[i].start && obj.full_day == marks[i].end) {
               obj.point = true;
-            } else if (obj.day >= start && obj.day <= end) {
+            } else if (now.getTime() >= c_start.getTime() && now.getTime() <= c_end.getTime()) {
               obj.active = true;
             }
           }
         }
+        //  标记日期 end
         arr.push(obj);
       }
       this.list.push(arr);
@@ -253,7 +261,7 @@ svg{
   font-weight: 500;
   cursor: pointer;
 }
-td:hover{
+.td:hover{
   background-color: rgba(42, 96, 211, 0.5);
 }
 .is-point{
