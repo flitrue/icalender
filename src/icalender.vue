@@ -60,12 +60,16 @@ export default {
   watch: {
     marks: {
       handler(val) {
-        this.getDayList(this.year, this.month, val);
+        this.getDayList(this.year, this.month);
       },
       deep: true
     }
   },
   methods: {
+    handleClick(data) {
+      this.active = data.full_day;
+      this.$emit("on-click", data);
+    },
     forward() {
       if(this.month == 0){
         this.year = this.year == 1970 ? 1970 : this.year - 1;
@@ -75,9 +79,9 @@ export default {
       }
       this.$emit("forward", {
         year: this.year,
-        month: this.month
+        month: this.month_list[this.this.month]
       })
-      this.getDayList(this.year, this.month, this.marks);
+      this.getDayList(this.year, this.month);
     },
     back() {
       if(this.month == 11){
@@ -88,9 +92,9 @@ export default {
       }
       this.$emit("back", {
         year: this.year,
-        month: this.month
+        month: this.month_list[this.this.month]
       })
-      this.getDayList(this.year, this.month, this.marks);
+      this.getDayList(this.year, this.month);
     },
     getCurrentMonth() {
       let date = new Date();
@@ -114,7 +118,7 @@ export default {
       let date = new Date();
       return date.getDay();
     },
-    getDayList(year, month, marks =[]) {
+    getDayList(year, month) {
       if(arguments.length < 2) throw new Error("getDayList必须传入两个参数year和month");
       let counts = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // 每年月份天数
       let date = new Date();
@@ -147,6 +151,8 @@ export default {
           let day = i_list[i] > 10 ? i_list[i] : "0" + i_list[i];
           obj.full_day = year + "-" + this.month_list[month] + "-" + day;
         }
+        // 日期标记
+        let marks = this.marks;
         for(let i=0;i<marks.length;i++){
           let c_date = new Date(marks[i].start.replace(/-/g, "/"))
           let c_year = c_date.getFullYear();
@@ -165,10 +171,6 @@ export default {
         arr.push(obj);
       }
       this.list.push(arr);
-    },
-    handleClick(data) {
-      this.active = data.full_day;
-      this.$emit("on-click", data);
     }
   },
   created() {
@@ -178,7 +180,7 @@ export default {
     let day = date.getDate();
     day < 10 && (day = "0" + day)
     this.now =  this.year + "-" + this.month_list[this.month] + "-" + day;
-    this.getDayList(this.year, this.month, this.marks);
+    this.getDayList(this.year, this.month);
   }
 }
 </script>
@@ -215,7 +217,8 @@ svg{
 }
 
 .icalender{
-  width: 260px;
+  width: 100%;
+  min-width: 260px;
   user-select: none;
 }
 
