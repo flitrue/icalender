@@ -79,7 +79,7 @@ export default {
       }
       this.$emit("forward", {
         year: this.year,
-        month: this.month_list[this.this.month]
+        month: this.month_list[this.month]
       })
       this.getDayList(this.year, this.month);
     },
@@ -92,7 +92,7 @@ export default {
       }
       this.$emit("back", {
         year: this.year,
-        month: this.month_list[this.this.month]
+        month: this.month_list[this.month]
       })
       this.getDayList(this.year, this.month);
     },
@@ -176,7 +176,7 @@ export default {
   created() {
     let date = new Date();
     this.month = date.getMonth();
-    this.year = date.getFullYear();
+    this.year = date.getFullYear().toString();
     let day = date.getDate();
     day < 10 && (day = "0" + day)
     this.now =  this.year + "-" + this.month_list[this.month] + "-" + day;
