@@ -8,11 +8,11 @@
 | 预览图 | 说明 |
 |:--|:--|
 | ![1.png](https://raw.githubusercontent.com/flitrue/icalender/master/screenshot/1.png) | 没有标记：`marks = []`
-|
-| ![2.png](https://raw.githubusercontent.com/flitrue/icalender/master/screenshot/2.png) | 标记一个日期：`marks = [{start: "2019-09-10", end: "2019-09-10"}]`|
-| ![3.png](https://raw.githubusercontent.com/flitrue/icalender/master/screenshot/3.png) | 标记一个日期范围： `marks = [{start: "2019-09-13", end: "2019-09-15"}]` |
-| ![4.png](https://raw.githubusercontent.com/flitrue/icalender/master/screenshot/4.png) | 混合标记：`marks = [{start: "2019-09-10", end: "2019-09-10"}, {start: "2019-09-13", end: "2019-09-15"}]` |
-| ![5.png](screenshot/5.png)![5.png](screenshot/6.png) | 跨月标记 ：`marks = [{start: "2019-09-10", end: "2019-09-10"}, {start: "2019-09-13", end: "2019-09-15"}, {start: "2019-09-28", end: "2019-10-03"}]`|
+| 
+| ![2.png](https://raw.githubusercontent.com/flitrue/icalender/master/screenshot/2.png) | 标记一个日期：`marks = [{start: "2019-09-10", end: "2019-09-10"}]`| 
+| ![3.png](https://raw.githubusercontent.com/flitrue/icalender/master/screenshot/3.png) | 标记一个日期范围： `marks = [{start: "2019-09-13", end: "2019-09-15"}]` | 
+| ![4.png](https://raw.githubusercontent.com/flitrue/icalender/master/screenshot/4.png) | 混合标记：`marks = [{start: "2019-09-10", end: "2019-09-10"}, {start: "2019-09-13", end: "2019-09-15"}]` | 
+| ![5.png](https://raw.githubusercontent.com/flitrue/icalender/master/screenshot/5.png)![5.png](https://raw.githubusercontent.com/flitrue/icalender/master/screenshot/6.png) | 跨月标记 ：`marks = [{start: "2019-09-10", end: "2019-09-10"}, {start: "2019-09-13", end: "2019-09-15"}, {start: "2019-09-28", end: "2019-10-03"}]`| 
 
 
 ## 使用
