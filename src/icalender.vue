@@ -1,7 +1,7 @@
 <template>
   <div class="icalender">
     <div class="icalender-header">
-      <div class="arrow" @click="forward">
+      <div class="arrow" @click="back">
         <svg fill="transparent" viewBox="0 0 30 30">
           <polyline points="20,5 10,15 20,25" stroke="#dcdcdc" stroke-width="4"></polyline>
         </svg>
@@ -9,7 +9,7 @@
       <div class="title">
         {{ year }}年{{ month_list[month] }}月
       </div>
-      <div class="arrow" @click="back">
+      <div class="arrow" @click="forward">
         <svg fill="transparent" viewBox="0 0 30 30">
           <polyline points="10,5 20,15 10,25" stroke="#dcdcdc" stroke-width="4"></polyline>
         </svg>
@@ -51,7 +51,7 @@ export default {
       active: undefined,
       now: "",
       year: "",
-      month: "",
+      month: 0,
       month_list: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"],
       week_list: ["日", "一", "二", "三", "四", "五", "六"],
       list: []
@@ -67,12 +67,13 @@ export default {
   },
   methods: {
     handleClick(data) {
+      if(!data.day) return false;
       this.active = data.full_day;
       this.$emit("on-click", data);
     },
-    forward() {
+    back() {
       if(this.month == 0){
-        this.year = this.year == 1970 ? 1970 : this.year - 1;
+        this.year = this.year == "1970" ? "1970" : (parseInt(this.year) - 1).toString();
         this.month = 11;
       } else {
         this.month -= 1;
@@ -83,9 +84,9 @@ export default {
       })
       this.getDayList(this.year, this.month);
     },
-    back() {
+    forward() {
       if(this.month == 11){
-        this.year += 1;
+        this.year = (parseInt(this.year) + 1).toString();
         this.month = 0;
       } else {
         this.month += 1;
@@ -151,7 +152,7 @@ export default {
         }
         
         if (i_list[i] != '') {
-          let day = i_list[i] > 10 ? i_list[i] : "0" + i_list[i];
+          let day = i_list[i] >= 10 ? i_list[i] : "0" + i_list[i];
           obj.full_day = year + "-" + this.month_list[month] + "-" + day;
         }
         //  标记日期 start
@@ -163,17 +164,25 @@ export default {
          * 4. 开始时间和结束时间范围包含当前月
          */
         let marks = this.marks;
-        for(let i=0;i<marks.length;i++){
-          let c_start = new Date(marks[i].start.replace(/-/g, "/"));
-          let c_end = new Date(marks[i].end.replace(/-/g, "/"));
-          if (obj.day) {
-            let now = new Date(obj.full_day.replace(/-/g, "/"));
-            if (obj.full_day === marks[i].start && obj.full_day == marks[i].end) {
-              obj.point = true;
-            } else if (now.getTime() >= c_start.getTime() && now.getTime() <= c_end.getTime()) {
-              obj.active = true;
+        try {
+          for(let i=0;i<marks.length;i++){
+            let c_start = new Date(marks[i].start.replace(/-/g, "/"));
+            let c_end = new Date(marks[i].end.replace(/-/g, "/"));
+            if (c_start.getTime() > c_end.getTime()) {
+              throw "开始日期start日期不能超过结束日期end";
+            }
+            
+            if (obj.day) {
+              let now = new Date(obj.full_day.replace(/-/g, "/"));
+              if (obj.full_day === marks[i].start && obj.full_day == marks[i].end) {
+                obj.point = true;
+              } else if (now.getTime() >= c_start.getTime() && now.getTime() <= c_end.getTime()) {
+                obj.active = true;
+              }
             }
           }
+        } catch(err) {
+          console.error(err)
         }
         //  标记日期 end
         arr.push(obj);
@@ -195,16 +204,16 @@ export default {
 
 <style scoped>
 svg{
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   vertical-align: middle;
 }
 
 .arrow{
   display: inline-block;
   background-color: rgba(31,45,61,.11);
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   line-height: 28px;
   text-align: center;
   border-radius: 50%;

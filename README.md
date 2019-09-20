@@ -7,10 +7,12 @@
 
 | 预览图 | 说明 |
 |:--|:--|
-| ![1.png](screenshot/1.png) | 没有标记 | 
-| ![2.png](screenshot/2.png) | 标记一个日期 | 
-| ![3.png](screenshot/3.png) | 标记一个日期范围 | 
-| ![4.png](screenshot/4.png) | 混合标记 | 
+| ![1.png](https://raw.githubusercontent.com/flitrue/icalender/master/screenshot/1.png) | 没有标记：`marks = []`
+|
+| ![2.png](https://raw.githubusercontent.com/flitrue/icalender/master/screenshot/2.png) | 标记一个日期：`marks = [{start: "2019-09-10", end: "2019-09-10"}]`|
+| ![3.png](https://raw.githubusercontent.com/flitrue/icalender/master/screenshot/3.png) | 标记一个日期范围： `marks = [{start: "2019-09-13", end: "2019-09-15"}]` |
+| ![4.png](https://raw.githubusercontent.com/flitrue/icalender/master/screenshot/4.png) | 混合标记：`marks = [{start: "2019-09-10", end: "2019-09-10"}, {start: "2019-09-13", end: "2019-09-15"}]` |
+| ![5.png](screenshot/5.png)![5.png](screenshot/6.png) | 跨月标记 ：`marks = [{start: "2019-09-10", end: "2019-09-10"}, {start: "2019-09-13", end: "2019-09-15"}, {start: "2019-09-28", end: "2019-10-03"}]`|
 
 
 ## 使用
@@ -39,16 +41,16 @@ new Vue({
         return {
             marks: [
                 {
-                    start: "2019-09-02",
-                    end: "2019-09-05"
+                    start: "2019-09-10",
+                    end: "2019-09-10"
                 },
                 {
-                    start: "2019-09-12",
-                    end: "2019-09-12"
+                    start: "2019-09-13",
+                    end: "2019-09-15"
                 },
                 {
-                    start: "2019-09-15",
-                    end: "2019-09-24"
+                    start: "2019-09-28",
+                    end: "2019-10-03"
                 }
             ]
         };
@@ -67,16 +69,16 @@ new Vue({
         return {
             marks: [
                 {
-                    start: "2019-09-02",
-                    end: "2019-09-05"
+                    start: "2019-09-10",
+                    end: "2019-09-10"
                 },
                 {
-                    start: "2019-09-12",
-                    end: "2019-09-12"
+                    start: "2019-09-13",
+                    end: "2019-09-15"
                 },
                 {
-                    start: "2019-09-15",
-                    end: "2019-09-24"
+                    start: "2019-09-28",
+                    end: "2019-10-03"
                 }
             ]
         };
